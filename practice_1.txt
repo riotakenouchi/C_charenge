@@ -1,9 +1,0 @@
-//問題1
-#include <stdio.h>
-int main() {
-    int num = 20;
-    printf("10進数=%d\n",num);
-    printf("16進数=0x%X\n",num);
-    printf("8進数=0%o\n",num);
-    return 0;
-}
