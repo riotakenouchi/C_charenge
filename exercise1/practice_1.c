@@ -1,9 +1,7 @@
-//問題1
+/* 問題1 */
 #include <stdio.h>
-int main() {
+int main(void) {
     int num = 20;
-    printf("10進数=%d ",num);
-    printf("16進数=0x%X ",num);
-    printf("8進数=0%o",num);
+    printf("10進数=%d 16進数=%#X 8進数=%#o", num, num, num);
     return 0;
 }
