@@ -1,5 +1,5 @@
 #include <stdio.h>
-int main() {
+int main(void) {
     unsigned int size_char = sizeof(char);
     unsigned int size_short = sizeof(short);
     unsigned int size_int = sizeof(int);
