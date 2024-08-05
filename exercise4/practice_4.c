@@ -7,3 +7,4 @@ int main(void) {
     printf("p:アドレス=%p 値=%p 指す先の値=%d\n", (void*)&p, (void*)p, *p);
     return 0;
 }
+
