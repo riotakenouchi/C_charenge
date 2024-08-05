@@ -3,8 +3,7 @@ int main(void) {
     int i = 20;
     int *p;
     p = &i;
-    printf("i:ƒAƒhƒŒƒX=%p ’l=%d\n", (void*)&i, i);
-    printf("p:ƒAƒhƒŒƒX=%p ’l=%p Žw‚·æ‚Ì’l=%d\n", (void*)&p, (void*)p, *p);
+    printf("i:ã‚¢ãƒ‰ãƒ¬ã‚¹=%p å€¤=%d\n", (void*)&i, i);
+    printf("p:ã‚¢ãƒ‰ãƒ¬ã‚¹=%p å€¤=%p æŒ‡ã™å…ˆã®å€¤=%d\n", (void*)&p, (void*)p, *p);
     return 0;
 }
-
