@@ -3,10 +3,10 @@
 int main(void) 
 {
     /* 配列の定義 */
-    char char_array[2] = 0x00;
-    short short_array[2] = 0x00;
-    int int_array[2] = 0x00;
-    long long_array[2] = 0x00;
+    char char_array[2] = "ab";  
+    short short_array[2] = {1,2};  
+    int int_array[2] = {1,2};   
+    long long_array[2] = {1,2};  
 
     /* ポインタの定義 */
     char *char_ptr = char_array;
@@ -15,7 +15,7 @@ int main(void)
     long *long_ptr = long_array;
 
     /* 配列の添字を進めた場合のアドレスの差とポインタをインクリメントした場合のアドレスの差の出力 */
-    printf("char 配列=%zu short 配列=%zu int 配列=%zu long 配列=%zu\n",
+    printf("char 配列=%zu short 配列=%zu int 配列=%zu long 配列=%zu\n"
            "charポインタ=%zu shortポインタ=%zu intポインタ=%zu longポインタ=%zu\n",
            (size_t)(&char_array[1]) - (size_t)(&char_array[0]),
            (size_t)(&short_array[1]) - (size_t)(&short_array[0]),
@@ -27,4 +27,5 @@ int main(void)
            (size_t)(long_ptr + 1) - (size_t)(long_ptr));
 
     return 0;
+
 }
