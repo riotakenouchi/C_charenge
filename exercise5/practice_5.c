@@ -3,10 +3,10 @@
 int main(void) 
 {
     /* 配列の定義 */
-    char char_array[2] = "ab";  
-    short short_array[2] = {1,2};  
-    int int_array[2] = {1,2};   
-    long long_array[2] = {1,2};  
+    char char_array[2] = "a";  
+    short short_array[2] = {};  
+    int int_array[2] = {};   
+    long long_array[2] = {};  
 
     /* ポインタの定義 */
     char *char_ptr = char_array;
