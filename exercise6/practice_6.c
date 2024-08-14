@@ -11,7 +11,8 @@ struct SAMPLE_t
     void *m6;
 };
 
-int main(void) {
+int main(void) 
+{
     struct SAMPLE_t sample;  /*SAMPLE_t のインスタンスを作成*/
 
     /*各メンバのサイズを格納するための変数の宣言と初期化処理*/
