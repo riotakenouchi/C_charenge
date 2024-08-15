@@ -1,5 +1,17 @@
 #include <stdio.h>
 
+int main(void) 
+{
+    int i;
+    
+    for (i = 0; i < 10; i++) {
+        int count_value = static_counter();  
+        printf("カウンタ: %d\n", count_value);
+    }
+
+    return 0;
+}
+
 /** 
  * @brief カウンタを返す関数
  *
@@ -12,15 +24,4 @@ static int static_counter()
 {
     static int count = 0; 
     return ++count;     
-}
-
-int main(void) 
-{
-    int i;
-    for (i = 0; i < 10; i++) {
-        int count_value = static_counter();  
-        printf("カウンタ: %d\n", count_value);
-    }
-
-    return 0;
 }
