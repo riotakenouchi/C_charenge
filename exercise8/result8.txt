@@ -1,2 +1,5 @@
-1: pram1
-2: pram2
+$ ./a.out test1 param1 param2 test4
+1: test1
+2: param1
+3: param2
+4: test4
