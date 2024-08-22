@@ -18,12 +18,9 @@ int main(void)
 }
 
 /**
- * @brief 値を入れ替える関数
- *        この関数は、2つの整数のポインタを受け取り、これらの値を入れ替えます。
- * @param[in] a 値を入れ替える整数へのポインタ
- * @param[in] b 値を入れ替える整数へのポインタ
- * @param[out] a 値が入れ替えられた後の整数へのポインタ
- * @param[out] b 値が入れ替えられた後の整数へのポインタ
+ * @brief int*型の中身を入れ替える関数
+ * @param[in,out] a 値を入れ替える整数へのポインタ
+ * @param[in,out] b 値を入れ替える整数へのポインタ
  */
 static void swap_int(int *a, int *b) 
 {
