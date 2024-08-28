@@ -51,8 +51,8 @@ int main(void)
  */
 static int compare_DAT(const void *a, const void *b) 
 {
-    DAT *datA = (DAT *)a;
-    DAT *datB = (DAT *)b;
+    const DAT *datA = (DAT *)a;
+    const DAT *datB = (DAT *)b;
 
     if (datA->n < datB->n) {
         return -1; 
