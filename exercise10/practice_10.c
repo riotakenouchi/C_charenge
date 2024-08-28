@@ -10,7 +10,8 @@ typedef struct DAT_t {
 
 static int compare_DAT(const void *a, const void *b); /*プロトタイプ宣言*/
 
-/** @brief メイン関数
+/**
+ * @brief メイン関数
  *
  * DAT 構造体の配列をソートして表示します。
  */
@@ -18,7 +19,7 @@ int main(void)
 {
     size_t num_element = 0;
 
-    DAT dat[] ={
+    DAT dat[] = {
        {9, "A"},
        {2, "A"},
        {5, "AB"},
