@@ -3,22 +3,11 @@
 #include <string.h>
 
 /** @brief データ構造体 */
-typedef struct DAT_t 
-{
+typedef struct DAT_t {
     int n;                
     const char* s;       
 } DAT;
 
-/** 
- * @brief 比較関数
- *
- * @note 2つの DAT 構造体を比較し、qsort で使用するための関数。
- *       n の値で昇順にソートし、n が同一の場合は s の文字コードで昇順にソート。
- *
- * @param a 比較する最初の要素
- * @param b 比較する次の要素
- * @return 整数 比較結果 (負の値: datA < datB, 0: datA == datB, 正の値: datA > datB)
- */
 static int compare_DAT(const void *a, const void *b); /*プロトタイプ宣言*/
 
 /** @brief メイン関数
@@ -27,14 +16,13 @@ static int compare_DAT(const void *a, const void *b); /*プロトタイプ宣言
  */
 int main(void) 
 {
-    size_t num_element = 0;/*初期化処理を定義*/
+    size_t num_element = 0;
 
-    DAT dat[] =
-    {
-        {9, "A"},
-        {2, "A"},
-        {5, "AB"},
-        {5, "AA"},
+    DAT dat[] ={
+       {9, "A"},
+       {2, "A"},
+       {5, "AB"},
+       {5, "AA"},
     };
 
     num_element = sizeof(dat) / sizeof(dat[0]);
@@ -50,7 +38,16 @@ int main(void)
     return 0;
 }
 
-/** @brief 比較関数の実装 */
+/** 
+ * @brief 比較関数
+ *
+ * @note 2つの DAT 構造体を比較し、qsort で使用するための関数。
+ *       n の値で昇順にソートし、n が同一の場合は s の文字コードで昇順にソート。
+ *
+ * @param[in] a 比較する最初の要素
+ * @param[in] b 比較する次の要素
+ * @return 整数 比較結果 (負の値: datA < datB, 0: datA == datB, 正の値: datA > datB)
+ */
 static int compare_DAT(const void *a, const void *b) 
 {
     DAT *datA = (DAT *)a;
