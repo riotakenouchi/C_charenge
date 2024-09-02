@@ -3,30 +3,33 @@
 
 int main(int argc, char *argv[]) 
 {
-    /*引数の数を確認*/
+    /* ファイルのポインタと文字を格納する変数を宣言 */
+    FILE *file_pointer; 
+    int character;
+
+    /* 引数の数を確認 */
     if (argc != 2) {
         fprintf(stderr, "usage\nusage: %s filename\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    /*指定されたファイル名*/
-    const char *filename = argv[1];
+    /* 指定されたファイル名 */
+    const char *input_filename = argv[1]; 
 
-    /*ファイルのポインタ*/
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
+    /* ファイルを開く */
+    file_pointer = fopen(input_filename, "r"); 
+    if (file_pointer == NULL) {
         perror("Error opening file");
         return EXIT_FAILURE;
     }
 
-    /*ファイルの内容を表示*/
-    char ch;
-    while ((ch = fgetc(file)) != EOF) {
-        putchar(ch);
+    /* ファイルの内容を表示 */
+    while ((character = fgetc(file_pointer)) != EOF) {
+        putchar(character);
     }
 
-    /*ファイルを閉じる*/
-    fclose(file);
+    /* ファイルを閉じる */
+    fclose(file_pointer); /* 変数名を file_pointer に変更 */
     return EXIT_SUCCESS;
 }
 

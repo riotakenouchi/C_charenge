@@ -1,2 +1,4 @@
+$ gcc -o display_file practice_11.c
+$ ./display_file
 usage
 usage: ./display_file filename
