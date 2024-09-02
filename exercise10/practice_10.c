@@ -10,14 +10,12 @@ typedef struct DAT_t {
 
 static int compare_DAT(const void *a, const void *b); /*プロトタイプ宣言*/
 
-/**
- * @brief メイン関数
- *
- * DAT 構造体の配列をソートして表示します。
+/** 
+ * @brief DAT 構造体の配列をソートして表示します
  */
 int main(void) 
 {
-    size_t num_element = 0;
+    size_t num_dat = 0;
 
     DAT dat[] = {
        {9, "A"},
@@ -26,13 +24,14 @@ int main(void)
        {5, "AA"},
     };
 
-    num_element = sizeof(dat) / sizeof(dat[0]);
+    num_dat = sizeof(dat) / sizeof(dat[0]);
 
-    /* qsort を使用して配列をソート */
-    qsort(dat, num_element, sizeof(DAT), compare_DAT);
+    /*qsort を使用して配列をソート*/
+    qsort(dat, num_dat, sizeof(DAT), compare_DAT);
 
-    /* ソートされた配列を表示 */
-    for (size_t i = 0; i < num_element; i++) {
+    size_t i; /*変数宣言*/
+    /*ソートされた配列を表示*/
+    for (i = 0; i < num_dat; i++) {
         printf("n: %d, s: %s\n", dat[i].n, dat[i].s);
     }
 
@@ -42,24 +41,24 @@ int main(void)
 /** 
  * @brief 比較関数
  *
- * @note 2つの DAT 構造体を比較し、qsort で使用するための関数。
+ * @note qsort で2つのDAT 構造体を比較するための関数
  *       n の値で昇順にソートし、n が同一の場合は s の文字コードで昇順にソート。
  *
  * @param[in] a 比較する最初の要素
  * @param[in] b 比較する次の要素
- * @return 整数 比較結果 (負の値: datA < datB, 0: datA == datB, 正の値: datA > datB)
+ * @return 整数 比較結果 (負の値: a < b, 0: a == b, 正の値: a > b)
  */
 static int compare_DAT(const void *a, const void *b) 
 {
-    const DAT *datA = (DAT *)a;
-    const DAT *datB = (DAT *)b;
+    const DAT *datA = (const DAT *)a; 
+    const DAT *datB = (const DAT *)b; 
 
     if (datA->n < datB->n) {
         return -1; 
-    } else if (datA->n > datB->n) {
+    } 
+    if (datA->n > datB->n) {
         return 1; 
-    } else {
-        return strcmp(datA->s, datB->s);
     }
+    return strcmp(datA->s, datB->s); 
 }
 
