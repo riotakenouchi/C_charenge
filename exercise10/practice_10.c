@@ -16,6 +16,7 @@ static int compare_DAT(const void *a, const void *b); /*プロトタイプ宣言
 int main(void) 
 {
     size_t num_dat = 0;
+    size_t i = 0; 
 
     DAT dat[] = {
        {9, "A"},
@@ -29,7 +30,6 @@ int main(void)
     /*qsort を使用して配列をソート*/
     qsort(dat, num_dat, sizeof(DAT), compare_DAT);
 
-    size_t i; /*変数宣言*/
     /*ソートされた配列を表示*/
     for (i = 0; i < num_dat; i++) {
         printf("n: %d, s: %s\n", dat[i].n, dat[i].s);
