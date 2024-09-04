@@ -1,12 +1,3 @@
-<コード実行結果>
 $gcc -o display_file practice_11.c
 $ ./display_file
-usage
 usage: display_file filename
-
-<テキストファイル実行結果>
-$ echo -e "こんにちは、これはサンプルテキストファイルです。\nこのファイルはcプログラムで表示されます。
-$ gcc -o display_file practice_11.c
-$ ./display_file sample.txt
-こんにちは、これはサンプルテキストファイルです。
-このファイルはCプログラムで表示されます。
