@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     /* 引数の数を確認 */
     if (argc != 2) {
-        fprintf(stderr, "usage\nusage: %s filename\n", argv[0]);
+        fprintf(stderr, "usage\nusage: display_file filename\n", argv[0]);
         return EXIT_FAILURE;
     }
 
