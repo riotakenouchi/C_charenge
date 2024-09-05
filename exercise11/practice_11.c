@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
             /* fgetsがNULLを返した場合の処理 */
             if (!feof(fp)) {
                 perror("Error reading file");
-                break;  /* エラー発生時にループを抜ける */
             }
             break;  /* EOFの場合はループを抜ける */
         }
