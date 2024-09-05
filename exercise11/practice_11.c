@@ -29,23 +29,21 @@ int main(int argc, char *argv[])
     while (1) {
         /* fgetsで読み込む */
         if (fgets(buffer, (int)(MAX_READ_BYTES + 1), fp) == NULL) {
-            if (feof(fp)) {
-                break;  /* EOFの場合はループを抜ける */
-            } else {
+            /* fgetsがNULLを返した場合の処理 */
+            if (!feof(fp)) {
                 perror("Error reading file");
-                break;  /* エラー発生時もループを抜ける */
+                break;  /* エラー発生時にループを抜ける */
             }
+            break;  /* EOFの場合はループを抜ける */
         }
         printf("%s", buffer);
     }
 
     /* ファイルを閉じる */
-    if (fp != NULL) {  /* fpがNULLでない場合のみ閉じる */
-        ret = fclose(fp);  /* fcloseの結果を変数に格納 */
-        if (ret != 0) {
-            perror("Error closing file");
-            return EXIT_FAILURE;
-        }
+    ret = fclose(fp);  /* fcloseの結果を変数に格納 */
+    if (ret != 0) {
+        perror("Error closing file");
+        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
