@@ -1,3 +1,7 @@
 $gcc -o display_file practice_11.c
 $ ./display_file
 usage: display_file filename
+
+$ ./display_file sample.txt
+こんにちは、これはサンプルテキストファイルです。
+このファイルはCプログラムで表示されます。
