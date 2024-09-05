@@ -9,10 +9,9 @@ int main(int argc, char *argv[])
     FILE *fp = NULL; 
     char buffer[MAX_READ_BYTES + 1];  /* ヌル文字分を考慮してサイズを定義 */
     const char *input_filename;
-    int close_result = fclose(fp);  /* fcloseの結果を変数に格納 */
     input_filename = argv[1];  /* 引数を参照 */
 
-    /* 引数の数を確認し、argvの参照を行う */
+    /* 引数の数を確認 */
     if (argc != 2) {
         fprintf(stderr, "usage: display_file filename\n");
         return EXIT_FAILURE;
@@ -26,12 +25,23 @@ int main(int argc, char *argv[])
     }
 
     /* ファイルの内容を表示 */
-    while (fgets(buffer, (int)(MAX_READ_BYTES + 1), fp) != NULL) {
-        /* fgetsで読み込んだ文字列を表示 */
+    while (1) {
+        /* fgetsで読み込む */
+        if (fgets(buffer, (int)(MAX_READ_BYTES + 1), fp) == NULL) {
+            if (feof(fp)) {
+                break;  /* EOFの場合はループを抜ける */
+            } else {
+                perror("Error reading file");
+                fclose(fp);  /* エラー時はファイルを閉じる */
+                return EXIT_FAILURE;
+            }
+        }
+        /* 読み込んだ文字列を表示 */
         printf("%s", buffer);
     }
 
     /* ファイルを閉じる */
+    int close_result = fclose(fp);  /* fcloseの結果を変数に格納 */
     if (close_result != 0) {
         perror("Error closing file");
         return EXIT_FAILURE;
@@ -39,4 +49,3 @@ int main(int argc, char *argv[])
 
     return EXIT_SUCCESS;
 }
-
