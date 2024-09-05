@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
     char buffer[MAX_READ_BYTES + 1];  
     const char *input_filename; 
     int ret;  /* fcloseの戻り値を格納するための変数 */
-
     FILE *fp = NULL; 
 
     /* 引数の数を確認 */
@@ -37,15 +36,16 @@ int main(int argc, char *argv[])
                 break;  /* エラー発生時もループを抜ける */
             }
         }
-
         printf("%s", buffer);
     }
 
     /* ファイルを閉じる */
-    ret = fclose(fp);  /* fcloseの結果を変数に格納 */
-    if (ret != 0) {
-        perror("Error closing file");
-        return EXIT_FAILURE;
+    if (fp != NULL) {  /* fpがNULLでない場合のみ閉じる */
+        ret = fclose(fp);  /* fcloseの結果を変数に格納 */
+        if (ret != 0) {
+            perror("Error closing file");
+            return EXIT_FAILURE;
+        }
     }
 
     return EXIT_SUCCESS;
