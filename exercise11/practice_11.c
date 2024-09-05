@@ -5,17 +5,19 @@
 
 int main(int argc, char *argv[]) 
 {
-    /* ファイルのポインタとバッファを宣言 */
+    char buffer[MAX_READ_BYTES + 1];  
+    const char *input_filename; 
+    int ret;  /* fcloseの戻り値を格納するための変数 */
+
     FILE *fp = NULL; 
-    char buffer[MAX_READ_BYTES + 1];  /* ヌル文字分を考慮してサイズを定義 */
-    const char *input_filename;
-    input_filename = argv[1];  /* 引数を参照 */
 
     /* 引数の数を確認 */
     if (argc != 2) {
         fprintf(stderr, "usage: display_file filename\n");
         return EXIT_FAILURE;
     }
+
+    input_filename = argv[1];  /* 引数を参照 */
 
     /* ファイルを開く */
     fp = fopen(input_filename, "r"); 
@@ -32,17 +34,16 @@ int main(int argc, char *argv[])
                 break;  /* EOFの場合はループを抜ける */
             } else {
                 perror("Error reading file");
-                fclose(fp);  /* エラー時はファイルを閉じる */
-                return EXIT_FAILURE;
+                break;  /* エラー発生時もループを抜ける */
             }
         }
-        /* 読み込んだ文字列を表示 */
+
         printf("%s", buffer);
     }
 
     /* ファイルを閉じる */
-    int close_result = fclose(fp);  /* fcloseの結果を変数に格納 */
-    if (close_result != 0) {
+    ret = fclose(fp);  /* fcloseの結果を変数に格納 */
+    if (ret != 0) {
         perror("Error closing file");
         return EXIT_FAILURE;
     }
