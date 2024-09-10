@@ -4,19 +4,19 @@ CC = gcc
 # コンパイルオプション
 CFLAGS = -Wall -Wextra -O2
 
-# 出力ファイル名
-OUTPUT = display_file
+# 出力ファイル名 (作成する実行ファイル)
+PROGRAM  = display_file
 
-# ソースファイル
-SOURCES = practice_11.c
+#オブジェクトファイル
+OBJS = practice_11.o 
 
 # デフォルトのターゲット
-all: $(OUTPUT)
+all: $(PROGRAM)
 
 # 出力ファイルを作成
-$(OUTPUT): $(SOURCES)
-	$(CC) $(CFLAGS) -o $(OUTPUT) $(SOURCES)
+$(PROGRAM): $(OBJS)
+	$(CC) $(CFLAGS) -o $(PROGRAM) $(OBJS)
 
 # クリーンターゲット
 clean:
-	rm -f $(OUTPUT)
+	rm -f $(PROGRAM) $(OBJS)
