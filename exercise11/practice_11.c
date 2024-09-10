@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_READ_BYTES 255  /* 読み込み最大バイト数を定義 */
+#define MAX_READ_BYTES 384  /* 読み込み最大バイト数を定義（ページサイズの倍数） */
+#define SUCCESS 0           /* プログラム成功時の戻り値 */
+#define FAILURE 1           /* プログラム失敗時の戻り値 */
 
 int main(int argc, char *argv[]) 
 {
     char buffer[MAX_READ_BYTES + 1];  
     const char *input_filename; 
-    int ret;  /* fcloseの戻り値を格納するための変数 */
     FILE *fp = NULL; 
 
     /* 引数の数を確認 */
     if (argc != 2) {
         fprintf(stderr, "usage: display_file filename\n");
-        return EXIT_FAILURE;
+        return FAILURE;
     }
 
     input_filename = argv[1];  /* 引数を参照 */
@@ -22,28 +23,27 @@ int main(int argc, char *argv[])
     fp = fopen(input_filename, "r"); 
     if (fp == NULL) {
         perror("Error opening file");
-        return EXIT_FAILURE;
+        return FAILURE;
     }
 
     /* ファイルの内容を表示 */
-    while (1) {
-        /* fgetsで読み込む */
-        if (fgets(buffer, (int)(MAX_READ_BYTES + 1), fp) == NULL) {
-            /* fgetsがNULLを返した場合の処理 */
-            if (!feof(fp)) {
-                perror("Error reading file");
-            }
-            break;  /* EOFの場合はループを抜ける */
-        }
+    while (fgets(buffer, MAX_READ_BYTES + 1, fp) != NULL) {
         printf("%s", buffer);
     }
 
-    /* ファイルを閉じる */
-    ret = fclose(fp);  /* fcloseの結果を変数に格納 */
-    if (ret != 0) {
-        perror("Error closing file");
-        return EXIT_FAILURE;
+    /* fgetsがNULLを返した場合の処理 */
+    if (!feof(fp)) {
+        perror("Error reading file");
+        fclose(fp);  /* エラー時でも必ずファイルを閉じる */
+        return FAILURE;
     }
 
-    return EXIT_SUCCESS;
+    /* ファイルを閉じる */
+    /* fcloseは常に実施する */
+    if (fclose(fp) != 0) {
+        perror("Error closing file");  /*  fcloseの戻り値チェック */
+        return FAILURE;
+    }
+
+    return SUCCESS;
 }
