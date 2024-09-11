@@ -3,9 +3,24 @@
 #include <string.h>
 #include <errno.h>
 
-#define MAX_READ_BYTES 384  /* 読み込み最大バイト数を定義（ページサイズの倍数） */
-#define SUCCESS 0           /* プログラム成功時の戻り値 */
-#define FAILURE 1           /* プログラム失敗時の戻り値 */
+#define MAX_READ_BYTES 256  /* 読み込み最大バイト数を定義 */
+#define SUCCESS 0             /* プログラム成功時の戻り値 */
+#define FAILURE 1             /* プログラム失敗時の戻り値 */
+
+int cleanup(FILE **fp) 
+{
+    int ret = SUCCESS;
+
+    if (*fp != NULL) {
+        ret = fclose(*fp);  /* fcloseの結果を変数に格納 */
+        *fp = NULL; /* ポインタをNULLに設定 */
+        if (ret != 0) { 
+            perror("Error closing file");
+            return FAILURE;  /* fcloseが失敗した場合はFAILUREを返す */
+        }
+    }
+    return ret;  /* 正常終了またはFAILUREを返す */
+}
 
 int main(int argc, char *argv[])
 {
@@ -29,21 +44,19 @@ int main(int argc, char *argv[])
     }
 
     /* ファイルの内容を表示 */
-    while (fgets(buffer, MAX_READ_BYTES + 1, fp) != NULL) {
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {  /* bufferのサイズを直接使用 */
         printf("%s", buffer);
     }
 
     /* fgetsがNULLを返した場合の処理 */
     if (!feof(fp)) {
         perror("Error reading file");
-        fclose(fp);  /* エラー時でも必ずファイルを閉じる */
+        cleanup(&fp);  /* エラー時の共通のクリーンアップ処理を呼び出す */
         return FAILURE;
     }
 
     /* ファイルを閉じる */
-    /* fcloseは常に実施する */
-    if (fclose(fp) != 0) {
-        perror("Error closing file");  /* fcloseの戻り値チェック */
+    if (cleanup(&fp) != SUCCESS) {  /* 共通のクリーンアップ処理の戻り値を確認 */
         return FAILURE;
     }
 
