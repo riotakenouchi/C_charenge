@@ -9,8 +9,9 @@
 
 int main(int argc, char *argv[])
 {
-    char buffer[MAX_READ_BYTES + 1];
+    char buffer[MAX_READ_BYTES];
     int ret = SUCCESS;
+    int close_ret;
     const char *input_filename;
     FILE *fp = NULL;
 
@@ -41,12 +42,10 @@ int main(int argc, char *argv[])
     }
 
     /* ファイルを閉じる */
-    if (fp != NULL) {
-        ret = fclose(fp);
-        if (ret != 0) {
-            perror("Error closing file");  /* fcloseの戻り値チェック */
-            return FAILURE;
-        }
+    close_ret = fclose(fp);
+    if (close_ret != 0) {
+        perror("Error closing file");  /* fcloseの戻り値チェック */
+        return FAILURE;
     }
 
     return ret;  /* 正常終了またはエラーを返す */
