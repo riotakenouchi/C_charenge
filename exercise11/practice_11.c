@@ -3,28 +3,14 @@
 #include <string.h>
 #include <errno.h>
 
-#define MAX_READ_BYTES 256  /* 読み込み最大バイト数を定義 */
+#define MAX_READ_BYTES 4096  /* 読み込み最大バイト数を定義 */
 #define SUCCESS 0             /* プログラム成功時の戻り値 */
 #define FAILURE 1             /* プログラム失敗時の戻り値 */
-
-int cleanup(FILE **fp) 
-{
-    int ret = SUCCESS;
-
-    if (*fp != NULL) {
-        ret = fclose(*fp);  /* fcloseの結果を変数に格納 */
-        *fp = NULL; /* ポインタをNULLに設定 */
-        if (ret != 0) { 
-            perror("Error closing file");
-            return FAILURE;  /* fcloseが失敗した場合はFAILUREを返す */
-        }
-    }
-    return ret;  /* 正常終了またはFAILUREを返す */
-}
 
 int main(int argc, char *argv[])
 {
     char buffer[MAX_READ_BYTES + 1];
+    int ret = SUCCESS;
     const char *input_filename;
     FILE *fp = NULL;
 
@@ -44,21 +30,24 @@ int main(int argc, char *argv[])
     }
 
     /* ファイルの内容を表示 */
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {  /* bufferのサイズを直接使用 */
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
         printf("%s", buffer);
     }
 
-    /* fgetsがNULLを返した場合の処理 */
-    if (!feof(fp)) {
+    /* fgetsが失敗した場合の処理 */
+    if (ferror(fp)) {
         perror("Error reading file");
-        cleanup(&fp);  /* エラー時の共通のクリーンアップ処理を呼び出す */
-        return FAILURE;
+        ret = FAILURE;  /* エラーが発生したため、リターン値をFAILUREにする */
     }
 
     /* ファイルを閉じる */
-    if (cleanup(&fp) != SUCCESS) {  /* 共通のクリーンアップ処理の戻り値を確認 */
-        return FAILURE;
+    if (fp != NULL) {
+        ret = fclose(fp);
+        if (ret != 0) {
+            perror("Error closing file");  /* fcloseの戻り値チェック */
+            return FAILURE;
+        }
     }
 
-    return SUCCESS;
+    return ret;  /* 正常終了またはエラーを返す */
 }
