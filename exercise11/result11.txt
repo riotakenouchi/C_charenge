@@ -1,0 +1,10 @@
+make
+gcc -Wall -Wextra -O2   -c -o practice_11.o practice_11.c
+gcc -Wall -Wextra -O2 -o display_file practice_11.o
+
+$ ./display_file sample.txt
+こんにちは、これはサンプルテキストファイルです。
+このファイルはCプログラムで表示されます。
+
+$ ./display_file
+usage: display_file filename
