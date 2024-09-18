@@ -5,13 +5,13 @@
 #define SUCCESS 0
 #define FAILURE 1
 
-void printHexDump(FILE *file) {
+void print_hex_dump(FILE *file)
+{
 	unsigned char buffer[BYTE_PER_LINE];
 	int i;
 	size_t bytesRead;
 	size_t j;
 	unsigned long address = 0;
-
 
 	/* ヘッダーの表示 */
 	printf("ADDRESS ");
@@ -40,7 +40,8 @@ void printHexDump(FILE *file) {
 	}
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
 	/* 変数の宣言 */
 	const char *filename;
 	FILE *file;
@@ -62,10 +63,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* ヘックスダンプの表示 */
-	printHexDump(file);
+	print_hex_dump(file);
 
 	/* ファイルをクローズ */
 	fclose(file);
-
 	return SUCCESS;
 }
