@@ -5,11 +5,20 @@
 #define SUCCESS 0
 #define FAILURE 1
 
+/**
+ * @brief ファイルのヘックスダンプを表示します。
+ * 
+ * この関数は、バイナリモードでファイルを読み込み、その内容をヘックス形式で表示します。
+ * 各行は最大16バイトを表し、対応するアドレスを示します。
+ * 
+ * @param file 読み込むファイルへのポインタ。
+ */
+
 void print_hex_dump(FILE *file)
 {
 	unsigned char buffer[BYTE_PER_LINE];
 	int i;
-	size_t bytesRead;
+	size_t bytes_read;
 	size_t j;
 	unsigned long address = 0;
 
@@ -21,13 +30,14 @@ void print_hex_dump(FILE *file)
 	printf("\n");
 
 	/* ファイルから読み取るループ */
-	while ((bytesRead = fread(buffer, sizeof(unsigned char), BYTE_PER_LINE, file)) > 0) {
+	while ((bytes_read = fread(buffer, sizeof(unsigned char),
+                BYTE_PER_LINE, file)) > 0) {
 		/* アドレスの表示 */
 		printf("%08lX ", address);
 
 		/* バッファの内容を表示 */
 		for (j = 0; j < BYTE_PER_LINE; j++) {
-			if (j < bytesRead) {
+			if (j < bytes_read) {
 				printf("%02X ", buffer[j]);
 			} else {
 				printf("   "); 
