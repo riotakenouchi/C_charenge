@@ -12,10 +12,11 @@ int main(int argc, char *argv[])
 {
     const char *filename;
     FILE *file;  /* [in] 読み込むファイルへのポインタ */
+    int close_ret;
 
     /* コマンドライン引数のチェック */
     if (argc != 2) {
-        fprintf(stderr, "usage: %s filename\noptions: filename  ファイル名\n", argv[0]);
+        fprintf(stderr, "usage: hexdump  filename\noptions: filename  ファイル名\n");
         return FAILURE;
     }
 
@@ -33,7 +34,8 @@ int main(int argc, char *argv[])
     print_hex_dump(file);
 
     /* ファイルをクローズ */
-    if (fclose(file) != 0) {
+    close_ret = fclose(file);
+    if (close_ret != 0) {
         perror("Error closing file");
         return FAILURE;
     }
@@ -57,7 +59,7 @@ void print_hex_dump(FILE *file)
     size_t i;  /* ここで宣言 */
 
     /* ヘッダーの表示 */
-    printf("ADDRESS    "); 
+    printf("ADDRESS  "); 
     for (i = 0; i < BYTE_PER_LINE; i++) {
         printf("%02lX ", (unsigned long)i);
     }
@@ -72,9 +74,6 @@ void print_hex_dump(FILE *file)
         /* バッファの内容を表示 */
         for (i = 0; i < bytes_read; i++) {
             printf("%02X ", buffer[i]);
-        }
-        for (; i < BYTE_PER_LINE; i++) {
-            printf("   ");
         }
         printf("\n");
         
