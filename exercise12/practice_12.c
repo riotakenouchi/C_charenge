@@ -7,13 +7,14 @@
 #define SUCCESS 0
 #define FAILURE 1
 
-void print_hex_dump(FILE *file);
+int print_hex_dump(FILE *file);
 
 int main(int argc, char *argv[])
- {
+{
 	const char *filename;
 	FILE *file;
 	int close_ret;
+	int ret = SUCCESS;
 
 	/* コマンドライン引数のチェック */
 	if (argc != 2) {
@@ -30,8 +31,10 @@ int main(int argc, char *argv[])
 		return FAILURE;  /* エラー理由の出力 */
 	}
 
-	print_hex_dump(file);
-	
+
+	 ret = print_hex_dump(file);
+	  	 return ret;
+
 	/* ファイルをクローズ */
 	close_ret = fclose(file);
 	/* ファイルクローズのエラーチェック */
@@ -51,46 +54,40 @@ int main(int argc, char *argv[])
  *
  * @param file [in] 読み込むファイルへのポインタ。
  */
-void print_hex_dump(FILE *file)
+int print_hex_dump(FILE *file)
  {
 	unsigned char buffer[BYTE_PER_LINE];
 	size_t bytes_read;
 	unsigned long index = 0;
-	size_t i;  /* ここで宣言 */
-	char header[256];
-	size_t offset = 0;
+	size_t i;  
 	char line[BYTE_PER_LINE * 3 + 1]; /* 各バイトに2桁、スペース1桁、最終のNULL文字 */
 
-	sprintf(header, "ADDRESS  ");
 	for (i = 0; i < BYTE_PER_LINE; i++) {
-		offset += sprintf(header + offset, "%02lX ", (unsigned long)i);
+		sprintf(&line[3 * i] , "%02lX ", i);
 	}
-	printf("%s\n", header);
+	printf(" ADDRESS %s\n",line);
 
 	/* ファイルから読み取るループ */
-	while ((bytes_read = fread(buffer, sizeof(unsigned char), BYTE_PER_LINE, file)) > 0) {
+	while (!feof(file)) {
+		bytes_read = fread(buffer, sizeof(unsigned char), BYTE_PER_LINE, file);
 		/* エラーチェック */
-		if (bytes_read < BYTE_PER_LINE && ferror(file)) {
+		if ( ferror(file)) {
 			perror("Error reading from file");
-			break;
+			return FAILURE;
 		}
 
 		/* アドレスの表示 */
-		printf("%08lX ", index);
+		printf("%07lX0 ", index);
 
 		/* バッファの内容を表示 */
-		offset = 0; /* offsetをリセット */
 		for (i = 0; i < bytes_read; i++) {
-			offset += sprintf(line + offset, "%02X ", buffer[i]);
+		 	 sprintf(&line[3 * i], "%02X ", buffer[i]);
 		}
 		printf("%s\n", line);
 
 		/* アドレスの更新 */
-		index += BYTE_PER_LINE;
+		index++;
 	}
-
-	/* EOFまたはエラーが発生した場合にファイル読取を終了 */
-	if (feof(file)) {
-		return; /* 正常終了のため何もしない */
-	}
+	return SUCCESS;
 }
+
