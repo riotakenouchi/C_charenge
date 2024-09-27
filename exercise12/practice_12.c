@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		return FAILURE;  /* エラー理由の出力 */
 	}
 
-	 ret = print_hex_dump(file);
+	ret = print_hex_dump(file);
 
 	/* ファイルをクローズ */
 	close_ret = fclose(file);
