@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
  * 各行は最大16バイトを表し、対応するアドレスを示します。
  *
  * @param[in] file 読み込むファイルへのポインタ。
- * return 成功時にSUCCESSを、失敗時にFAILUREを返します。
+ * @return 成功時にSUCCESSを、失敗時にFAILUREを返します。
  */
 int print_hex_dump(FILE *file)
  {
@@ -62,7 +62,7 @@ int print_hex_dump(FILE *file)
 	char line[BYTE_PER_LINE * 3 + 1]; /* 各バイトに2桁、スペース1桁、最終のNULL文字 */
 
 	for (i = 0; i < BYTE_PER_LINE; i++) {
-		/* 1バイトにつき、3つスペースを使うため、1文字はline[0]、2文字目はline[3]から書き込む */
+		/* 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの1バイトの合計3バイトを使う。そのため入力文字の1文字		 目はline[0]から始まり2文字目以降の添え字は3の倍数となる。*/
 		sprintf(&line[3 * i] , "%02lX ", i);
 	}
 	printf(" ADDRESS %s\n",line);
@@ -78,7 +78,7 @@ int print_hex_dump(FILE *file)
 
 		/* バッファの内容を表示 */
 		for (i = 0; i < bytes_read; i++) {
-			 /* 1バイトにつき、3つスペースを使うため、1文字はline[0]、2文字目はline[3]から書き込む */
+			 /* 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの1バイトの合計3バイトを使う。そのため入力文			  字の1文字目はline[0]から始まり2文字目以降の添え字は3の倍数となる。*/
 		 	 sprintf(&line[3 * i], "%02X ", buffer[i]);
 		}
 		printf("%07lX0 %s\n", index, line);
