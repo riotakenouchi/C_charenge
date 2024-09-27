@@ -31,9 +31,7 @@ int main(int argc, char *argv[])
 		return FAILURE;  /* エラー理由の出力 */
 	}
 
-
 	 ret = print_hex_dump(file);
-	  	 return ret;
 
 	/* ファイルをクローズ */
 	close_ret = fclose(file);
@@ -43,7 +41,7 @@ int main(int argc, char *argv[])
 		return FAILURE;
 	}
 
-	return SUCCESS;
+	return ret;
 }
 
 /* 
@@ -52,7 +50,7 @@ int main(int argc, char *argv[])
  * この関数は、バイナリモードでファイルを読み込み、その内容をヘックス形式で表示します。
  * 各行は最大16バイトを表し、対応するアドレスを示します。
  *
- * @param file [in] 読み込むファイルへのポインタ。
+ * @param[in] file 読み込むファイルへのポインタ。
  */
 int print_hex_dump(FILE *file)
  {
@@ -71,19 +69,16 @@ int print_hex_dump(FILE *file)
 	while (!feof(file)) {
 		bytes_read = fread(buffer, sizeof(unsigned char), BYTE_PER_LINE, file);
 		/* エラーチェック */
-		if ( ferror(file)) {
+		if (ferror(file)) {
 			perror("Error reading from file");
 			return FAILURE;
 		}
-
-		/* アドレスの表示 */
-		printf("%07lX0 ", index);
 
 		/* バッファの内容を表示 */
 		for (i = 0; i < bytes_read; i++) {
 		 	 sprintf(&line[3 * i], "%02X ", buffer[i]);
 		}
-		printf("%s\n", line);
+		printf("%07lX0 %s\n", index, line);
 
 		/* アドレスの更新 */
 		index++;

@@ -290,4 +290,3 @@ $ xxd practice_12.c
 $ ./hexdump
 usage: hexdump filename
 options: filename ファイル名
-[takenouchi@vzr93001 exercise12]$
