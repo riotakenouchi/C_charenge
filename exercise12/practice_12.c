@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	/* ファイルオープンのエラーチェック */
 	if (!file) {
 		fprintf(stderr, "Error opening file '%s': %s\n", filename, strerror(errno));
-		return FAILURE;  /* エラー理由の出力 */
+		return FAILURE; 
 	}
 
 	ret = print_hex_dump(file);
@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
  * 各行は最大16バイトを表し、対応するアドレスを示します。
  *
  * @param[in] file 読み込むファイルへのポインタ。
+ * return 成功時にSUCCESSを、失敗時にFAILUREを返します。
  */
 int print_hex_dump(FILE *file)
  {
@@ -61,6 +62,7 @@ int print_hex_dump(FILE *file)
 	char line[BYTE_PER_LINE * 3 + 1]; /* 各バイトに2桁、スペース1桁、最終のNULL文字 */
 
 	for (i = 0; i < BYTE_PER_LINE; i++) {
+		/* 1バイトにつき、3つスペースを使うため、1文字はline[0]、2文字目はline[3]から書き込む */
 		sprintf(&line[3 * i] , "%02lX ", i);
 	}
 	printf(" ADDRESS %s\n",line);
@@ -76,6 +78,7 @@ int print_hex_dump(FILE *file)
 
 		/* バッファの内容を表示 */
 		for (i = 0; i < bytes_read; i++) {
+			 /* 1バイトにつき、3つスペースを使うため、1文字はline[0]、2文字目はline[3]から書き込む */
 		 	 sprintf(&line[3 * i], "%02X ", buffer[i]);
 		}
 		printf("%07lX0 %s\n", index, line);
