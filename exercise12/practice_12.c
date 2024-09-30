@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	/* コマンドライン引数のチェック */
 	if (argc != 2) {
 		fprintf(stderr, "usage: hexdump filename\n"
-			"options: filename ファイル名\n");
+				"options: filename ファイル名\n");
 		return FAILURE;
 	}
 	
