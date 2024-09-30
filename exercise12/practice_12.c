@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
 
 	/* コマンドライン引数のチェック */
 	if (argc != 2) {
-		fprintf(stderr, "usage: hexdump filename\noptions: filename ファイル名\n");
+		fprintf(stderr, "usage: hexdump filename\n"
+			"options: filename ファイル名\n");
 		return FAILURE;
 	}
 	
@@ -62,7 +63,11 @@ int print_hex_dump(FILE *file)
 	char line[BYTE_PER_LINE * 3 + 1]; /* 各バイトに2桁、スペース1桁、最終のNULL文字 */
 
 	for (i = 0; i < BYTE_PER_LINE; i++) {
-		/* 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの1バイトの合計3バイトを使う。そのため入力文字の1文字		 目はline[0]から始まり2文字目以降の添え字は3の倍数となる。*/
+	       /*
+ 		* 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの
+ 		* 1バイトの合計3バイトを使う。そのため入力文字の1文字目はline[0]から始まり2文字目以降の
+ 		* 添え字は3の倍数となる。
+ 		*/
 		sprintf(&line[3 * i] , "%02lX ", i);
 	}
 	printf(" ADDRESS %s\n",line);
@@ -78,7 +83,11 @@ int print_hex_dump(FILE *file)
 
 		/* バッファの内容を表示 */
 		for (i = 0; i < bytes_read; i++) {
-			 /* 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの1バイトの合計3バイトを使う。そのため入力文			  字の1文字目はline[0]から始まり2文字目以降の添え字は3の倍数となる。*/
+			/*
+                 	 * 入力文字1文字につき、HEX表記の下2桁(0xXXのXX)を使用するため2 バイト、半角スペースの
+                 	 * 1バイトの合計3バイトを使う。そのため入力文字の1文字目はline[0]から始まり2文字目以降の
+                  	 * 添え字は3の倍数となる。
+                 	 */
 		 	 sprintf(&line[3 * i], "%02X ", buffer[i]);
 		}
 		printf("%07lX0 %s\n", index, line);
